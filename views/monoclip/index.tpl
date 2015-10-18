@@ -1,10 +1,4 @@
-{include file="`$smarty.const.TEMPLATE_DIR`/common/header.tpl"}
-
-<script src="/js/clip_post.js"></script>
-<script src="/js/image_post.js"></script>
-<script src="/js/memo_post.js"></script>
-<script src="/js/image_slider.js"></script>
-
+{include file="`$smarty.const.TEMPLATE_DIR`/common/header.tpl" add_css="monoclip/monoclip.css" add_js="clip_post.js,image_post.js,memo_post.js,image_slider.js"}
 
 
 <p>monoclip</p>
@@ -12,22 +6,6 @@
 {if !$user}
 <a href="/user/login?r={$smarty.server.REQUEST_URI|urlencode}">{$lang->convert('ログイン')}</a>
 {/if}
-
-
-<!--
- -
- - メニュー
- -
- -->
-<section id="menu">
-<ul id="menu-list">
-<li><a href="#image-clips">Photos</a></li>
-<li><a href="#memo-clips">Memos</a></li>
-{*
-<li><a href="#video-clips">Video</a></li>
-*}
-</ul><!-- #menu-list -->
-</section><!-- #menu -->
 
 
 
@@ -38,10 +16,11 @@
  -->
 
 <section id="contents">
+<div id="main">
 {if !$shareclips}
 
 {else}
-<div class="image_slider" style="height: 200px;">
+<div class="image_slider">
 {foreach from=$shareclips item=clip name=clip}
 <div>
     <!-- クリップ画像表示 -->
@@ -49,15 +28,15 @@
     <figure id="figure-{$clip->getId()}">
     <figcaption>{$lang->convert($clip->getTitle())}</figcaption>
 {if $shareclipImages[$smarty.foreach.clip.index]}
-    <img src="/monoclip/imageapi/{$shareclipImages[$smarty.foreach.clip.index]->getId()}" width="100" />
+    <img src="/monoclip/imageapi/{$shareclipImages[$smarty.foreach.clip.index]->getId()}" height="100px" />
 {else}
-    <img src="http://placehold.jp/100x100.png" width="100" />
+    <img src="http://placehold.jp/100x100.png" height="100px" />
 {/if}
     </figure>
     </a>
 </div>
 {/foreach}
-</div><!-- slider -->
+</div><!-- .image_slider -->
 {/if}
 
 
@@ -66,8 +45,6 @@
  - 個人クリップ
  -
  -->
-<p><a href="/monoclip/open">{$lang->convert('クリップを追加')}</a></p>
-
 <form id="clip-post" action="/monoclip/post" method="post">
 <div>
 <select name="type">
@@ -93,7 +70,7 @@
 </form>
 
 <div id="image-clips">
-<ul>
+<ul class="none-list">
 <!-- 画像のクリップフォーム -->
 {foreach from=$imageclips item=clip}
 <li>
@@ -102,9 +79,9 @@
     <figure id="figure-{$clip->getId()}">
         <figcaption>{$lang->convert($clip->getTitle())}</figcaption>
 {if $imageclipImages[$clip->getId()]}
-        <img id="upload{$clip->getId()}" src="/monoclip/imageapi/{$imageclipImages[$clip->getId()]->getId()}" width="100" />
+        <img id="upload{$clip->getId()}" src="/monoclip/imageapi/{$imageclipImages[$clip->getId()]->getId()}" width="100px" />
 {else}
-        <img id="upload{$clip->getId()}" src="http://placehold.jp/100x100.png" width="100" />
+        <img id="upload{$clip->getId()}" src="http://placehold.jp/100x100.png" width="100px" />
 {/if}
     </figure>
     </a>
@@ -131,11 +108,12 @@
     <!-- メモのクリップフォーム -->
     <form class="memo_uploader" action="/monoclip/update/{$clip->getId()}" method="post">
     <p>{$clip->getTitle()}</p>
-{if $memoclipMemos[$clip->getId()]}
-    <div class="memo">{$memoclipMemos[$clip->getId()]->getText()|nl2br}</div>
+{if $memoclipMemos[$clip->getId()] && $memoclipMemos[$clip->getId()]->getText()}
+    <div class="memo is-memo">{$memoclipMemos[$clip->getId()]->getText()|nl2br}</div>
     <textarea name="text" class="memo" style="display: none;">{$memoclipMemos[$clip->getId()]->getText()|nl2br}</textarea>
 {else}
-    <div class="memo">aaa</div>
+    <div class="memo no-memo">
+    </div>
     <textarea name="text" class="memo" style="display: none;">aaa</textarea>
 {/if}
     <input type="hidden" name="__time" value="{$__time}" />
@@ -147,21 +125,16 @@
 </li>
 {/foreach}
 </ul>
+</div><!-- div#memo-clip -->
+</div><!-- div.main -->
 
 <!--
-{*
-<div>
-    <!-- メモのクリップフォーム -->
-    <form class="memo_uploader" action="/monoclip/post" method="post">
-    <div class="memo">aaaa</div>
-    <textarea class="memo">aaaa</textarea>
-    <input type="hidden" name="__time" value="{$__time}" />
-    <input type="hidden" name="__token" value="{$__token}" />
-    </form>
-</div>
-*}
--->
-</div><!-- div#memo-clip -->
+ -
+ - メニュー
+ -
+ -->
+{include file="`$smarty.const.TEMPLATE_DIR`/common/menu.parts.tpl"}
 </section><!-- #contents -->
 
+{include file="`$smarty.const.TEMPLATE_DIR`/common/information.parts.tpl"}
 {include file="`$smarty.const.TEMPLATE_DIR`/common/footer.tpl"}

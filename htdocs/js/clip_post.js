@@ -25,7 +25,7 @@ $(function (){
 
 			switch (data.type) {
 			case '0':
-				var insertHtml = '<li><a href="/monoclip/clip/'+data.clip_id+'"><figure id="figure-'+data.clip_id+'"><figcaption>'+data.title+'</figcaption><img id="upload'+data.clip_id+'" src="http://placehold.jp/100x100.png" width="100" /></figure></a></li><form class="image_uploader" data-image-id="'+data.clip_id+'" action="/monoclip/update/'+data.clip_id+'" method="post" enctype="multipart/form-data"><input type="file" name="clip" accept="image/*;capture=camera" style="display: none;"/><a class="image-select button" href="#">選択</a><a class="image-clip button" href="#">クリップ</a><input type="hidden" name="__time" value="{$__time}" /><input type="hidden" name="__token" value="{$__token}" /></form>' ;
+				var insertHtml = '<li><a href="/monoclip/clip/'+data.clip_id+'"><figure id="figure-'+data.clip_id+'"><figcaption>'+data.title+'</figcaption><img id="upload'+data.clip_id+'" src="http://placehold.jp/200x200.png" width="200px" /></figure></a></li><form class="image_uploader" data-image-id="'+data.clip_id+'" action="/monoclip/update/'+data.clip_id+'" method="post" enctype="multipart/form-data"><input type="file" name="clip" accept="image/*;capture=camera" style="display: none;"/><a class="image-select button" href="#">選択</a><a class="image-clip button" href="#">クリップ</a><input type="hidden" name="__time" value="{$__time}" /><input type="hidden" name="__token" value="{$__token}" /></form>' ;
 
 				$('div#image-clips > ul ').prepend(insertHtml) ;
 				break ;
@@ -35,7 +35,11 @@ $(function (){
 				break ;
 			}
 		})
-		.fail(function(data) {
+		.fail(function(xhr, textStatus, errorThrown) {
+console.log(xhr) ;
+console.log(textStatus) ;
+console.log(errorThrown) ;
+console.log("NG:" + textStatus.status);
 		})
 /*
 		.always(function(data) {

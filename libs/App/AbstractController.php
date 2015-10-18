@@ -33,6 +33,8 @@ abstract class AbstractController extends AppUtil {
 	public function setEngine($engine) {
 		$this->_engine = $engine ;
 		$this->_engine->assign('lang', $this->_lang) ;
+		$this->_engine->assign('isPc', $this->isPc()) ;
+		$this->_engine->assign('isSp', $this->isSp()) ;
 		$this->__time = time() ;
 		$this->_engine->assign('__time', $this->__time) ;
 		$this->__token = $this->generateToken(null, $this->__time) ;
@@ -51,12 +53,14 @@ abstract class AbstractController extends AppUtil {
 	 * PCブラウザ
 	 */
 	public function isPc() {
+		return true ;
 	}
 
 	/**
 	 * スマホブラウザ
 	 */
 	public function isSp() {
+		return false ;
 	}
 
 

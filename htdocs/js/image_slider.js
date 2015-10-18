@@ -3,7 +3,7 @@ $(function(){
 		centerMode: true,
 		centerPadding: '60px',
 		lazyLoad: 'ondemand',
-		slidesToShow: 3,
+		slidesToShow: 2,
 		autoplay: true,
 		autoplaySpeed: 2000,
 		arrows: true,
@@ -13,7 +13,7 @@ $(function(){
 				arrows: true,
 				centerMode: true,
 				centerPadding: '40px',
-				slidesToShow: 3
+				slidesToShow: 2
 			}
 		},
 		{

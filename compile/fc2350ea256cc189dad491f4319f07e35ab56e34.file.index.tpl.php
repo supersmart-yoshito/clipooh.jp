@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.21-dev, created on 2015-10-13 00:25:17
+<?php /* Smarty version Smarty-3.1.21-dev, created on 2015-10-18 00:45:54
          compiled from "/Users/yosito_sato/Sites/test.localhost/views/monoclip/index.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:17544058665613ef36de4279-51242437%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'fc2350ea256cc189dad491f4319f07e35ab56e34' => 
     array (
       0 => '/Users/yosito_sato/Sites/test.localhost/views/monoclip/index.tpl',
-      1 => 1444663502,
+      1 => 1445096753,
       2 => 'file',
     ),
   ),
@@ -33,21 +33,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   ),
   'has_nocache_code' => false,
 ),false); /*/%%SmartyHeaderCode%%*/?>
-<?php if ($_valid && !is_callable('content_5613ef36e5ffe3_86053716')) {function content_5613ef36e5ffe3_86053716($_smarty_tpl) {?><?php echo $_smarty_tpl->getSubTemplate (((string)@constant('TEMPLATE_DIR'))."/common/header.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, null, array(), 0);?>
-
-
-<?php echo '<script'; ?>
- src="/js/clip_post.js"><?php echo '</script'; ?>
->
-<?php echo '<script'; ?>
- src="/js/image_post.js"><?php echo '</script'; ?>
->
-<?php echo '<script'; ?>
- src="/js/memo_post.js"><?php echo '</script'; ?>
->
-<?php echo '<script'; ?>
- src="/js/image_slider.js"><?php echo '</script'; ?>
->
+<?php if ($_valid && !is_callable('content_5613ef36e5ffe3_86053716')) {function content_5613ef36e5ffe3_86053716($_smarty_tpl) {?><?php echo $_smarty_tpl->getSubTemplate (((string)@constant('TEMPLATE_DIR'))."/common/header.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, null, array('add_css'=>"monoclip/monoclip.css",'add_js'=>"clip_post.js,image_post.js,memo_post.js,image_slider.js"), 0);?>
 
 
 
@@ -60,20 +46,6 @@ $_valid = $_smarty_tpl->decodeProperties(array (
 <?php }?>
 
 
-<!--
- -
- - メニュー
- -
- -->
-<section id="menu">
-<ul id="menu-list">
-<li><a href="#image-clips">Photos</a></li>
-<li><a href="#memo-clips">Memos</a></li>
-
-</ul><!-- #menu-list -->
-</section><!-- #menu -->
-
-
 
 <!--
  -
@@ -82,10 +54,11 @@ $_valid = $_smarty_tpl->decodeProperties(array (
  -->
 
 <section id="contents">
+<div id="main">
 <?php if (!$_smarty_tpl->tpl_vars['shareclips']->value) {?>
 
 <?php } else { ?>
-<div class="image_slider" style="height: 200px;">
+<div class="image_slider">
 <?php  $_smarty_tpl->tpl_vars['clip'] = new Smarty_Variable; $_smarty_tpl->tpl_vars['clip']->_loop = false;
  $_from = $_smarty_tpl->tpl_vars['shareclips']->value; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array');}
  $_smarty_tpl->tpl_vars['smarty']->value['foreach']['clip']['index']=-1;
@@ -103,15 +76,15 @@ $_smarty_tpl->tpl_vars['clip']->_loop = true;
 </figcaption>
 <?php if ($_smarty_tpl->tpl_vars['shareclipImages']->value[$_smarty_tpl->getVariable('smarty')->value['foreach']['clip']['index']]) {?>
     <img src="/monoclip/imageapi/<?php echo $_smarty_tpl->tpl_vars['shareclipImages']->value[$_smarty_tpl->getVariable('smarty')->value['foreach']['clip']['index']]->getId();?>
-" width="100" />
+" height="100px" />
 <?php } else { ?>
-    <img src="http://placehold.jp/100x100.png" width="100" />
+    <img src="http://placehold.jp/100x100.png" height="100px" />
 <?php }?>
     </figure>
     </a>
 </div>
 <?php } ?>
-</div><!-- slider -->
+</div><!-- .image_slider -->
 <?php }?>
 
 
@@ -120,9 +93,6 @@ $_smarty_tpl->tpl_vars['clip']->_loop = true;
  - 個人クリップ
  -
  -->
-<p><a href="/monoclip/open"><?php echo $_smarty_tpl->tpl_vars['lang']->value->convert('クリップを追加');?>
-</a></p>
-
 <form id="clip-post" action="/monoclip/post" method="post">
 <div>
 <select name="type">
@@ -156,7 +126,7 @@ $_smarty_tpl->tpl_vars['clip']->_loop = true;
 </form>
 
 <div id="image-clips">
-<ul>
+<ul class="none-list">
 <!-- 画像のクリップフォーム -->
 <?php  $_smarty_tpl->tpl_vars['clip'] = new Smarty_Variable; $_smarty_tpl->tpl_vars['clip']->_loop = false;
  $_from = $_smarty_tpl->tpl_vars['imageclips']->value; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array');}
@@ -174,10 +144,10 @@ $_smarty_tpl->tpl_vars['clip']->_loop = true;
 <?php if ($_smarty_tpl->tpl_vars['imageclipImages']->value[$_smarty_tpl->tpl_vars['clip']->value->getId()]) {?>
         <img id="upload<?php echo $_smarty_tpl->tpl_vars['clip']->value->getId();?>
 " src="/monoclip/imageapi/<?php echo $_smarty_tpl->tpl_vars['imageclipImages']->value[$_smarty_tpl->tpl_vars['clip']->value->getId()]->getId();?>
-" width="100" />
+" width="100px" />
 <?php } else { ?>
         <img id="upload<?php echo $_smarty_tpl->tpl_vars['clip']->value->getId();?>
-" src="http://placehold.jp/100x100.png" width="100" />
+" src="http://placehold.jp/100x100.png" width="100px" />
 <?php }?>
     </figure>
     </a>
@@ -216,13 +186,14 @@ $_smarty_tpl->tpl_vars['clip']->_loop = true;
 " method="post">
     <p><?php echo $_smarty_tpl->tpl_vars['clip']->value->getTitle();?>
 </p>
-<?php if ($_smarty_tpl->tpl_vars['memoclipMemos']->value[$_smarty_tpl->tpl_vars['clip']->value->getId()]) {?>
-    <div class="memo"><?php echo nl2br($_smarty_tpl->tpl_vars['memoclipMemos']->value[$_smarty_tpl->tpl_vars['clip']->value->getId()]->getText());?>
+<?php if ($_smarty_tpl->tpl_vars['memoclipMemos']->value[$_smarty_tpl->tpl_vars['clip']->value->getId()]&&$_smarty_tpl->tpl_vars['memoclipMemos']->value[$_smarty_tpl->tpl_vars['clip']->value->getId()]->getText()) {?>
+    <div class="memo is-memo"><?php echo nl2br($_smarty_tpl->tpl_vars['memoclipMemos']->value[$_smarty_tpl->tpl_vars['clip']->value->getId()]->getText());?>
 </div>
     <textarea name="text" class="memo" style="display: none;"><?php echo nl2br($_smarty_tpl->tpl_vars['memoclipMemos']->value[$_smarty_tpl->tpl_vars['clip']->value->getId()]->getText());?>
 </textarea>
 <?php } else { ?>
-    <div class="memo">aaa</div>
+    <div class="memo no-memo">
+    </div>
     <textarea name="text" class="memo" style="display: none;">aaa</textarea>
 <?php }?>
     <input type="hidden" name="__time" value="<?php echo $_smarty_tpl->tpl_vars['__time']->value;?>
@@ -238,12 +209,19 @@ if (!$_smarty_tpl->tpl_vars['clip']->_loop) {
 </li>
 <?php } ?>
 </ul>
+</div><!-- div#memo-clip -->
+</div><!-- div.main -->
 
 <!--
+ -
+ - メニュー
+ -
+ -->
+<?php echo $_smarty_tpl->getSubTemplate (((string)@constant('TEMPLATE_DIR'))."/common/menu.parts.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, null, array(), 0);?>
 
--->
-</div><!-- div#memo-clip -->
 </section><!-- #contents -->
+
+<?php echo $_smarty_tpl->getSubTemplate (((string)@constant('TEMPLATE_DIR'))."/common/information.parts.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, null, array(), 0);?>
 
 <?php echo $_smarty_tpl->getSubTemplate (((string)@constant('TEMPLATE_DIR'))."/common/footer.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, null, array(), 0);?>
 
