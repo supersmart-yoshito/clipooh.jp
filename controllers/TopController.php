@@ -2,12 +2,32 @@
 
 class TopController extends AbstractController {
 
+	private $_user ;
+
+	/**
+	 * コントローラ初期化
+	 */
+	public function initController() {
+		$this->registerPrefilter($this, 'authenticator');
+	}
+
+	/**
+	 * ユーザ認証
+	 */
+	public function authenticator() {
+
+		// ログインユーザ取得
+		if ($this->mapper['Users']->isLoggedIn()) {
+			$this->_user = $this->mapper['Users']->getUser() ;
+			$this->assign('user', $this->_user) ;
+		}
+
+		return true ;
+	}
 
 	public function indexAction() {
 
-		$list = $this->mapper['Sessions']->find()->limit(10)->result()->getAll() ;
-		$count= $this->mapper['Sessions']->count() ;
-		$this->render('index.tpl', array(
+		return $this->render('index.tpl', array(
 			'list' => $list
 		)) ;
 	}

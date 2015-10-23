@@ -1,4 +1,4 @@
-{include file='common/header.tpl' pageTitle=$smarty.const.SITE_NAME}
+{include file="`$smarty.const.TEMPLATE_DIR`/common/header.tpl"}
 
 
 
@@ -11,4 +11,4 @@
 <iframe width="560" height="315" src="https://www.youtube.com/embed/7hVYEJA91Pg" frameborder="0" allowfullscreen></iframe>
 
 
-{include file='common/footer.tpl'}
+{include file="`$smarty.const.TEMPLATE_DIR`/common/footer.tpl"}

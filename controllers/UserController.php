@@ -165,6 +165,13 @@ class UserController extends AbstractController {
 
 		// ログイン
 		$user = $this->mapper['Users']->login($userId, $userPass) ;
+		if (!$user) {
+
+			return $this->render('user/login.tpl', array_merge(
+				array('error' => 1),
+				$this->event->post
+			)) ;
+		}
 
 		if ($this->event->getParams('r')) {
 			return $this->redirect(urldecode($this->event->getParams('r'))) ;

@@ -19,6 +19,7 @@ abstract class AbstractController extends AppUtil {
 		$this->event = $event ;
 		$this->action = $action ;
 		$this->_lang = new AppVendorLang($event) ;
+		$this->_ua = new AppVendorUseragent() ;
 
 		// サブクラスに初期化メソッドが定義されていれば実行
 		if (method_exists($this, 'initController')) {
@@ -53,14 +54,14 @@ abstract class AbstractController extends AppUtil {
 	 * PCブラウザ
 	 */
 	public function isPc() {
-		return true ;
+		return $this->_ua->set() !== 'mobile' ;
 	}
 
 	/**
 	 * スマホブラウザ
 	 */
 	public function isSp() {
-		return false ;
+		return $this->_ua->set() === 'mobile' ;
 	}
 
 
@@ -98,6 +99,9 @@ abstract class AbstractController extends AppUtil {
 	public function render($template, $params = array()) {
 		foreach ($params as $key => $value) {
 			$this->_engine->assign($key, $value) ;
+		}
+		if ($this->isSp()) {
+			$template = 'mb/'.$template ;
 		}
 		return $template ;
 	}
