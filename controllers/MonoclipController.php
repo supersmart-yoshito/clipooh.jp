@@ -140,11 +140,11 @@ class MonoclipController extends AbstractController {
 		// ユーザクリップ
 		if ($userId) {
 
-			$monoclips = $this->mapper['Monoclips']->findByUserId($userId, self::CLIP_IMAGES_LISTING) ;
+			$monoclips = $this->mapper['Monoclips']->findByUserId($userId, self::CLIP_LISTING) ;
 
 		} else if ($this->_user) {
 
-			$monoclips = $this->mapper['Monoclips']->findByUserId($this->_user->getId(), self::CLIP_IMAGES_LISTING) ;
+			$monoclips = $this->mapper['Monoclips']->findByUserId($this->_user->getId(), self::CLIP_LISTING) ;
 		}
 
 

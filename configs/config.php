@@ -12,7 +12,7 @@ define('STORAGE_DIR', dirname(__FILE__).'/../data') ;
 //
 // SERVICE
 //
-define('SITE_NAME', 'テストサイト') ;
+define('SITE_NAME', 'イベントソーシャルサイト「クリップ〜」') ;
 
 
 

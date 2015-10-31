@@ -27,8 +27,32 @@ class TopController extends AbstractController {
 
 	public function indexAction() {
 
+		$clipMapper = $this->mapper['Monoclips'] ;
+
+
+
+		// ログイン済みの場合Myクリップを取得
+		if ($this->mapper['Users']->isLoggedIn()) {
+
+			$myclips = $clipMapper->findclipsByUserId(
+				$this->_user->getId(),
+				MonoclipsModel::CLIP_TYPE_IMAGES,
+				10
+			);
+
+
+/*
+			$myclips = $clipMapper->findByUserId($this->_user->getId(), 10) ;
+			foreach ($myclips as $index => $myclip) {
+				$imageclipImages[$myclip->getId()] = $clipMapper->findLatestByClipId($myclip->getId()) ;
+			}
+*/
+			// 友達のクリップを取得
+		}
+
+
 		return $this->render('index.tpl', array(
-			'list' => $list
+			'myclips' => $myclips
 		)) ;
 	}
 

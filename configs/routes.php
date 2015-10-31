@@ -45,6 +45,18 @@ $routing = array(
 		'controller' => 'user',
 		'action' => 'leave',
 	), 
+	'/event' => array(
+		'controller' => 'event',
+		'action' => 'index',
+	), 
+	'/event' => array(
+		'controller' => 'event',
+		'action' => 'index',
+	),
+	'/event' => array(
+		'controller' => 'event',
+		'action' => 'index',
+	),
 	'/blog' => array(
 		'controller' => 'blog',
 		'action' => 'index',

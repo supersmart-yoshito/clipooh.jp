@@ -1,20 +1,53 @@
+/**
+ *
+ * 配色
+ *
+ */
 .red {
 	color: #FFFFFF;
 	background-color: #FF4040;
 }
 
-.date
-.title
-.category
-{
+#keyvisual{
+	position: relative;
+	z-Index: 1;
 }
 
-.title
+#catchcopy {
+	margin: 0px;
+	padding: 0px;
+
+	font-weight: bold;
+	font-family: cursive, fantasy, sans-serif;
+	background-color: rgba(255,255,255,0.4);
+	position: relative;
+	top: -30px;
+	z-Index: 2;
+}
+#search {
+	width: 100%;
+
+	position: relative;
+	top: -15px;
+
+}
+#search,
+#search *
 {
 	margin: 0px;
-	padding:  3px;
+	padding: 0px;
+}
 
+/**
+ *
+ * 汎用テキストクラス
+ *
+ */
+.title
+{
 	height: 40px;
+	margin: 0px;
+	padding:  3px;
 
 	font-size: 14px;
 	line-height: 1.0;
@@ -42,6 +75,27 @@
 	border-radius: 8px;
 	display: inline-block;
 }
+
+.event-title
+{
+	height: 20px;
+	margin: 0px;
+	padding: 3px;
+
+	font-size: 14px;
+	line-height: 1.0;
+}
+.event-date,
+.event-place
+{
+	margin: 0px;
+	padding: 3px;
+
+	font-size: 10px;
+	line-height: 1.0;
+}
+
+
 
 ul {
 	margin:  0px;
@@ -94,6 +148,7 @@ ul.none-list {
 	margin: 0px;
 	padding: 0px;
 	font-size: 12px;
+	font-family: cursive, fantasy, sans-serif;
 }
 /*
 .tab > ul.tab-list {
@@ -150,12 +205,11 @@ ul.menu-2-columns > li {
 }
 
 ul.menu-2-columns > li > a {
-	height: 100px;
 	display: block;
+	text-align: center;
 }
 
 ul.menu-2-columns > li > a > img {
-	height: 100%;
 	width: 100%;
 }
 
@@ -215,6 +269,66 @@ ul.item-list > li > a > div.list-content * {
 
 }
 
+
+/**
+ *
+ * イベントリスト
+ *
+ */
+ul.event-list {
+	margin: 0px;
+	padding: 0px;
+}
+
+ul.event-list > li {
+	display: inline;
+}
+ul.event-list > li:last-child {
+	margin: 0px;
+	padding: 0px;
+}
+
+ul.event-list > li > a {
+	display: block;
+	height: 90px;
+}
+ul.event-list > li:nth-child(2n) > a {
+	background-color: #F0F0F0;
+}
+ul.event-list > li:last-child > a {
+	height: auto;
+	text-align: right;
+}
+ul.event-list > li:last-child > a > p {
+	margin: 0px;
+	padding: 0px;
+}
+
+ul.event-list > li > a > div.event-thumbnail {
+	float: left;
+	height: 90px;
+	width: 90px;
+}
+
+ul.event-list > li > a > div.event-thumbnail > img {
+	margin: 5px;
+	height: 80px;
+	width: 80px;
+}
+
+ul.event-list > li > a > div.event-content {
+	margin-left: -90px;
+	height: 90px;
+	width: 100%;
+
+	float: right;
+	text-align: left;
+}
+
+ul.event-list > li > a > div.event-content * {
+	margin-left: 90px;
+
+}
 
 /**
  *
@@ -289,4 +403,121 @@ ul.clip-list > li > a > div.clip-content > img {
 	border-style: solid;
 	border-width: 10px 10px 10px 0;
 	border-color: transparent #19283C transparent transparent;
+}
+
+
+/**
+ *
+ * クリップ投稿
+ *
+ */
+
+#clip-post {
+	display: none;
+}
+
+div#clip-image-part {
+	width: 100%;
+}
+
+div#clip-title {
+	margin: 10px
+}
+div#clip-title input[name=title] {
+	width: 100%;
+}
+
+ul#clip-images {
+	margin: 10px
+}
+ul#clip-images li {
+	max-width: 25%;
+	max-height: 80px;
+
+	margin: 0px 0px 10px 0px;
+	float: left;
+	display: inline;
+}
+ul#clip-images li div {
+	margin: 0px;
+	padding: 0px;
+	position: relative ;
+}
+ul#clip-images li div input {
+	display: none;
+}
+ul#clip-images li img.clip-image {
+/*
+	margin: 5px 5px 5px 5px;
+*/
+	text-align: center;
+	width: 90%;
+	height: 90%;
+	overflow: hidden;
+}
+
+ul#clip-images li img.clip-cancel {
+	width: 25px;
+	height: 25px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	display: none;
+	position: absolute;
+	opacity: 0.7;
+}
+ul#clip-images li:nth-child(4n+1) img.clip-image {
+/*
+	margin-left: 10px;
+*/
+}
+ul#clip-images li:nth-child(4n) img.clip-image {
+/*
+	margin-right: 10px;
+*/
+}
+
+
+#photo-clip {
+	heigth: 100%;
+	width: 100%;
+
+	margin: 0px;
+	padding: 0px;
+
+	list-style: none;
+	background-color: #000000;
+}
+#photo-clip li {
+	width: 50%;
+/*
+	height: 100px;
+*/
+
+	float: left;
+	display: inline;
+/*
+	overflow: hidden;
+*/
+}
+#photo-clip li a {
+	width: 100%;
+	height: 160px;
+
+	margin: 1px;
+	overflow: hidden;
+	display: block;
+}
+#photo-clip li a img {
+	border: 1px solid;
+}
+#photo-clip li a img.max-width {
+	width: 100%;
+}
+#photo-clip li a img.max-heigth {
+	height: 100%;
+/*
+	width: 100%
+	max-height: 100px;
+*/
 }

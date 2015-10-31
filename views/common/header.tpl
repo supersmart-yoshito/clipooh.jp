@@ -38,7 +38,7 @@
 
 </head>
 <body>
-<header>
+<header id="header">
 <nav>
 <ul class="none-list">
 <li><a href="/"><img src="http://placehold.jp/200x100.png?text=logo" /></a></li>

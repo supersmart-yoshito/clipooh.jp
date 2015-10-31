@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.21-dev, created on 2015-10-23 01:25:26
+<?php /* Smarty version Smarty-3.1.21-dev, created on 2015-10-24 03:18:28
          compiled from "/Users/yosito_sato/Sites/test.localhost/views/common/header.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:63013035056040d7220fa04-30199194%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'c6b7c3f28968f51197fc4316aba401d8da23ed51' => 
     array (
       0 => '/Users/yosito_sato/Sites/test.localhost/views/common/header.tpl',
-      1 => 1445531125,
+      1 => 1445624274,
       2 => 'file',
     ),
   ),
@@ -90,7 +90,7 @@ $_smarty_tpl->tpl_vars['item']->_loop = true;
 
 </head>
 <body>
-<header>
+<header id="header">
 <nav>
 <ul class="none-list">
 <li><a href="/"><img src="http://placehold.jp/200x100.png?text=logo" /></a></li>
