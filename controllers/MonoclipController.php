@@ -239,7 +239,7 @@ class MonoclipController extends AbstractController {
 	 *
 	 *
 	 */
-	public function postApiAction() {
+	public function createApiAction() {
 
 		// 直接遷移
 		if (!$this->event->isPost()) {
@@ -264,6 +264,81 @@ class MonoclipController extends AbstractController {
 
 	/**
 	 *
+	 *
+	 *
+	 */
+	public function postApiAction() {
+
+		// 直接遷移
+		if (!$this->event->isPost()) {
+			return $this->renderJson(-1) ;
+		}
+
+		// 必要項目のPOSTチェック
+		if (empty($this->event->getParams('title'))
+			|| empty($this->event->getParams('publish'))
+			|| empty($this->event->getParams('type'))) {
+
+			return $this->renderJson(-2) ;
+		}
+
+		// 画像付きクリップのチェック
+		$clipWithImage = array(MonoclipsModel::CLIP_TYPE_IMAGES) ;
+		if (in_array($this->event->getParams('type'), $clipWithImage)) {
+
+			if (empty($this->event->files) || empty($this->event->files['clip'])) {
+				return $this->renderJson(-3) ;
+			}
+
+			// エラーが発生している場合は即時終了
+			foreach ($this->event->files['clip']['error'] as $index => $error) {
+				if ($error !== 0) {
+					return $this->renderJson(
+						-4, 
+						$this->event->files['clip']['error']
+					) ;
+				}
+
+				// 許容MIMEチェック
+				$type = @exif_imagetype($this->event->files['clip']['tmp_name'][$index]);
+				if (!in_array($type, [IMAGETYPE_GIF, IMAGETYPE_JPEG, IMAGETYPE_PNG], true)) {
+					return $this->renderJson(-5, array('index' => $index)) ;
+				}
+			}
+		}
+
+		// クリップの作成
+		$clipId = $this->mapper['Monoclips']->open(
+			$this->_user->getId(),
+			$this->event->getParams('title'),
+			$this->event->getParams('publish'),
+			$this->event->getParams('type')
+		) ;
+
+		// クリップへのデータ紐付け
+		switch ($this->event->getParams('type')) {
+		case MonoclipsModel::CLIP_TYPE_IMAGES :
+			$postIds = $this->addImages($clipId) ;
+			break ;
+		case MonoclipsModel::CLIP_TYPE_MEMOS :
+			$postIds = $this->addMemos($clipId) ;
+			break ;
+		default :
+			$postIds = $this->addImages($clipId) ;
+			break ;
+		}
+
+		return $this->renderJson(0, array(
+			'clip_id'=>$clipId,
+			'type'=>$this->event->getParams('type'),
+			'title'=>$this->event->getParams('title'),
+			'post_ids' => $postIds,
+		)) ;
+	}
+
+
+	/**
+	 *
 	 * @param integer $clipId クリップID
 	 * @return 
 	 */
@@ -281,11 +356,8 @@ class MonoclipController extends AbstractController {
 
 		switch ($monoclip->getType()) {
 		case MonoclipsModel::CLIP_TYPE_IMAGES :
-			return $this->clipImages($clipId) ;
 		case MonoclipsModel::CLIP_TYPE_MEMOS :
-			return $this->clipMemos($clipId) ;
 		default :
-			return $this->clipImages($clipId) ;
 		}
 	}
 
@@ -306,7 +378,8 @@ class MonoclipController extends AbstractController {
 		// TODO: アクセス可否チェック
 
 		header('Content-type: image/jpeg');
-		readfile('data/user/'.$image->getUserId().'/'.$image->getName()) ;
+		echo $image->getImage() ;
+		//readfile('data/user/'.$image->getUserId().'/'.$image->getName()) ;
 		exit ;
 	}
 
@@ -346,35 +419,39 @@ class MonoclipController extends AbstractController {
 	 * @param integer $clipId クリップID
 	 * @return string テンプレート名
 	 */
-	private function clipImages($clipId) {
+	private function addImages($clipId) {
 
-		if (!$this->event->files || !empty($this->event->files['clip']['error'])) {
-			return $this->render('api/response.tpl', array(
-				'apiResponse' => json_encode(array('status' => 3)),
-			)) ; 
+		if (!$this->event->files) {
+			return false ;
 		}
 
-		$tmpName = $this->event->files['clip']['tmp_name'] ;
-		$name = $this->event->files['clip']['name'] ;
+		$tmpNames = $this->event->files['clip']['tmp_name'] ;
+		$names = $this->event->files['clip']['name'] ;
 
+/*
 		$this->makeDirectory(STORAGE_DIR.'/user/'.$this->_user->getId()) ;
 		if (!move_uploaded_file($tmpName, STORAGE_DIR.'/user/'.$this->_user->getId().'/'.$name)) {
 			return $this->render('api/response.tpl', array(
 				'apiResponse' => json_encode(array('status' => 4)),
 			)) ; 
 		}
+*/
 
-		// データ投入
-		$clipImagesId = $this->mapper['MonoclipImages']->post(
-			$clipId,
-			$this->_user->getId(),
-			$name
-		) ;
+		$imageIds = array() ;
+		foreach ($tmpNames as $index => $tmpName) {
 
-		return $this->renderJson(0, array(
-			'clip_id' => $clipId,
-			'image_id' => $clipImagesId
-		)) ; 
+			// データ投入
+			$imageId = $this->mapper['MonoclipImages']->addImage(
+				$clipId,
+				$this->_user->getId(),
+				$names[$index],
+				$tmpName
+			) ;
+
+			$imageIds[] = $imageId ;
+		}
+
+		return $imageIds ;
 	}
 
 	/**
@@ -401,10 +478,34 @@ class MonoclipController extends AbstractController {
 	}
 
 
+	/**
+	 * メモクリップ処理
+	 * @param integer $clipId クリップID
+	 * @return string テンプレート名
+	 */
+	private function addMemos($clipId) {
+
+
+		$text = $this->event->getParams('text') ;
+
+		// データ投入
+		$clipMemosId = $this->mapper['MonoclipMemos']->post(
+			$clipId,
+			$this->_user->getId(),
+			$text
+		) ;
+
+		return $this->renderJson(0, array(
+			'clip_id' => $clipId,
+			'memo_id' => $clipMemosId
+		)) ; 
+	}
+
+
 	private function renderJson($status, $data=array()) {
 
 		return $this->render('api/response.tpl', array(
-			'apiResponse' => json_encode(array_merge(array('status' => 1), $data)),
+			'apiResponse' => json_encode(array_merge(array('status' => $status), $data)),
 		)) ; 
 	}
 }

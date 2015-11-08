@@ -1,10 +1,12 @@
 <html>
 <head>
-<title>{$pageTitle}</title>
+<title>{$smarty.const.SITE_NAME}{if $pageTitle}&nbsp;|&nbsp;{$pageTitle}{/if}</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
 
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
+{*<link rel="stylesheet" href="/css/jquery-ui.min.css">*}
+<link rel="stylesheet" href="/css/jquery-ui-timepicker-addon.css">
 {if $isPc}
 <link rel="stylesheet" href="/css/common.css">
 {elseif $isSp}
@@ -26,7 +28,10 @@
 {/if}
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-<script src="https://code.jquery.com/ui/1.11.0/jquery-ui.js"></script> 
+<script src="/js/jquery-ui.min.js"></script>
+<script src="/js/jquery-ui-sliderAccess.js"></script>
+<script src="/js/jquery-ui-timepicker-addon.js"></script>
+<script src="/js/jquery-ui-timepicker-ja.js"></script>
 <script src="/js/slick.min.js"></script>
 
 {if $add_js}

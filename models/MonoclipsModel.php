@@ -3,10 +3,11 @@
 
 class MonoclipsModel extends BaseModel {
 
-	const CLIP_TYPE_IMAGES = 0 ;
-	const CLIP_TYPE_VIDEOS = 1 ;
-	const CLIP_TYPE_MUSICS = 2 ;
-	const CLIP_TYPE_MEMOS  = 3 ;
+	const CLIP_TYPE_IMAGES = 1 ;
+	const CLIP_TYPE_VOICES = 2 ;
+	const CLIP_TYPE_VIDEOS = 3 ;
+	const CLIP_TYPE_MUSICS = 4 ;
+	const CLIP_TYPE_MEMOS  = 5 ;
 
 	/**
 	 *

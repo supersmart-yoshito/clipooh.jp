@@ -72,6 +72,10 @@ ul.none-list {
 	clear: both ;
 }
 
+.center {
+	text-align: center;
+}
+
 
 .image_slider {
 	height: 150px;

@@ -1,10 +1,8 @@
 <?php 
-class MonoclipImagesEntity {
+class FriendsEntity {
 	public $id ;
-	public $clip_id ;
 	public $user_id ;
-	public $name ;
-	public $image ;
+	public $friend_id ;
 	public $created ;
 	public $updated ;
 	public $deleted ;
@@ -14,23 +12,13 @@ class MonoclipImagesEntity {
 		return $this ;
 	}
 
-	public function setClipId($clip_id) {
-		$this->clip_id = $clip_id ;
-		return $this ;
-	}
-
 	public function setUserId($user_id) {
 		$this->user_id = $user_id ;
 		return $this ;
 	}
 
-	public function setName($name) {
-		$this->name = $name ;
-		return $this ;
-	}
-
-	public function setImage($image) {
-		$this->image = $image ;
+	public function setFriendId($friend_id) {
+		$this->friend_id = $friend_id ;
 		return $this ;
 	}
 
@@ -54,20 +42,12 @@ class MonoclipImagesEntity {
 		return $this->id ;
 	}
 
-	public function getClipId() {
-		return $this->clip_id ;
-	}
-
 	public function getUserId() {
 		return $this->user_id ;
 	}
 
-	public function getName() {
-		return $this->name ;
-	}
-
-	public function getImage() {
-		return $this->image ;
+	public function getFriendId() {
+		return $this->friend_id ;
 	}
 
 	public function getCreated() {

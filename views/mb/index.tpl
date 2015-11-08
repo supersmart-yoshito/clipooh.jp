@@ -80,6 +80,7 @@
 
 <!-- イベント -->
 <ul id="event-clips" class="event-list none-list">
+  <li><a href="/event/open">イベントを作成</a></li>
   <li><a href="">
   <div class="event-thumbnail"><img src="http://placehold.jp/c0c0c0/000000/50x50.png" /></div>
   <div class="event-content">
@@ -155,12 +156,13 @@
 <script>
 {literal}
 $(function () {
+
 	function getItem() {
 		var item = '' + 
 		'<li><div>' +
-		'<input type="file" name="dummy" accept="image/*;capture=camera" />' + 
+		'<input type="file" name="dummy" />' + 
 		'<img class="clip-image" src="http://placehold.jp/50x50png?text=＋" />' + 
-		'<img class="clip-cancel" src="http://placehold.jp//10x10png?text=X" />' + 
+		'<img class="clip-cancel" src="/image/close_red.gif" />' + 
 		'</div></li>' ;
 
 		return item ;
@@ -169,6 +171,7 @@ $(function () {
 
 	$(document).on('click', 'img.clip-image', function () {
 		$(this).prev().click() ;
+		return false ;
 	}) ;
 
 	$(document).on('click', 'img.clip-cancel', function () {
@@ -192,6 +195,7 @@ $(function () {
 		if (dummyCount == 0) {
 			$('ul#clip-images').append(getItem()) ;
 		}
+		return false ;
 	}) ;
 
 	$(document).on('change', 'ul#clip-images li div input[type=file]', function (){
@@ -234,6 +238,11 @@ $(function () {
 		$(this).next().next().css('left', $(this).next().position().left) ;
 		$(this).next().next().css('display', 'block') ;
 	}) ;
+
+	$(document).on('click', '#clip-form > a', function() {
+		$(this).parent().submit() ;
+		return false ;
+	}) ;
 }) ;
 {/literal}
 </script>
@@ -249,8 +258,8 @@ $(function () {
     <form id="clip-form" action="/monoclip/post" method="post" enctype="multipart/form-data">
     <div id="clip-type">
     <select name="type">
-    <option value="0" selected>{$lang->convert('写真')}</option>
-    <option value="3">{$lang->convert('一言')}</option>
+    <option value="1" selected>{$lang->convert('Photo')}</option>
+    <option value="2">{$lang->convert('Voice')}</option>
     </select>
     <select name="category">
     <option value="1" selected>category</option>
@@ -263,9 +272,9 @@ $(function () {
       </div><!-- div#clip-title -->
       <ul id="clip-images" class="none-list">
         <li><div>
-        <input type="file" name="dummy" accept="image/*;capture=camera" />
+        <input type="file" name="dummy" />
         <img class="clip-image" src="http://placehold.jp/50x50png?text=＋" />
-	<img class="clip-cancel" src="http://placehold.jp/25x25png?text=X" />
+	<img class="clip-cancel" src="/image/close_red.gif" />
         </div></li>
       </ul>
       <div class="clearfix"></div>
@@ -275,12 +284,12 @@ $(function () {
     </div><!-- clip-murmur-part -->
 
     <select name="publish">
-    <option value="0" selected>{$lang->convert('全体に公開')}</option>
-    <option value="1">{$lang->convert('友達に公開')}</option>
-    <option value="2">{$lang->convert('ブループに公開')}</option>
-    <option value="3">{$lang->convert('非公開')}</option>
+    <option value="1" selected>{$lang->convert('全体に公開')}</option>
+    <option value="2">{$lang->convert('友達に公開')}</option>
+    <option value="3">{$lang->convert('ブループに公開')}</option>
+    <option value="4">{$lang->convert('非公開')}</option>
     </select>
-    <a href="#" class="button">クリップを追加</a>
+    <input type="submit" value="クリップを追加" class="button" />
     <input type="hidden" name="__time" value="{$__time}" />
     <input type="hidden" name="__token" value="{$__token}" />
     </form>
@@ -305,9 +314,7 @@ $(function () {
   </a></li>
   {foreachelse}
   {/foreach}
-  {if $myclip->getType() == MonoclipsModel::CLIP_TYPE_IMAGES}
   <li><a href="/monoclip/list/">More</a></li>
-  {/if}
 {else}
   <li><a href="">
   Myクリップを利用する

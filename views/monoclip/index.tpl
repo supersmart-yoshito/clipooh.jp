@@ -58,10 +58,10 @@
 </div>
 <div>
 <select name="publish">
-<option value="0" selected>{$lang->convert('全体に公開')}</option>
-<option value="1">{$lang->convert('友達に公開')}</option>
-<option value="2">{$lang->convert('ブループに公開')}</option>
-<option value="3">{$lang->convert('非公開')}</option>
+<option value="1" selected>{$lang->convert('全体に公開')}</option>
+<option value="2">{$lang->convert('友達に公開')}</option>
+<option value="3">{$lang->convert('ブループに公開')}</option>
+<option value="4">{$lang->convert('非公開')}</option>
 </select>
 <a href="#" class="button">クリップを追加</a>
 </div>

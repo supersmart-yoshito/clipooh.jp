@@ -10,14 +10,16 @@ class MonoclipImagesModel extends BaseModel {
 	 *
 	 *
 	 */
-	public function post($clipId, $userId, $name) {
+	public function addImage($clipId, $userId, $name, $imagepath) {
 
 		try {
+			$image = file_get_contents($imagepath) ;
 
 			$entity = new MonoclipImagesEntity() ;
 			$entity->setClipId($clipId) ;
 			$entity->setUserId($userId) ;
 			$entity->setName($name) ;
+			$entity->setImage($image) ;
 			$entity->setCreated(date('Y-m-d H:i:s')) ;
 			$entity->setUpdated(date('Y-m-d H:i:s')) ;
 			$entity = $this->save($entity) ;

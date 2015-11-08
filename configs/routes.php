@@ -49,13 +49,21 @@ $routing = array(
 		'controller' => 'event',
 		'action' => 'index',
 	), 
-	'/event' => array(
+	'/event/list' => array(
 		'controller' => 'event',
-		'action' => 'index',
+		'action' => 'list',
+	), 
+	'/event/detail/:event_id' => array(
+		'controller' => 'event',
+		'action' => 'detail',
 	),
-	'/event' => array(
+	'/event/open' => array(
 		'controller' => 'event',
-		'action' => 'index',
+		'action' => 'open',
+	),
+	'/event/close/:event_id' => array(
+		'controller' => 'event',
+		'action' => 'close',
 	),
 	'/blog' => array(
 		'controller' => 'blog',

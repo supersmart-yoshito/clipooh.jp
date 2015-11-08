@@ -12,11 +12,11 @@
 </td></tr>
 <tr><th>{$lang->convert('公開設定')}</th></tr>
 <tr><td>
-{if $publish == 0}
+{if $publish == 1}
 {$lang->convert('全体に公開')}
-{elseif $publish == 1}
-{$lang->convert('友達に公開')}
 {elseif $publish == 2}
+{$lang->convert('友達に公開')}
+{elseif $publish == 3}
 {$lang->convert('ブループに公開')}
 {else}
 {$lang->convert('非公開')}
